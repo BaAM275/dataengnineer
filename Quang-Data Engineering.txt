@@ -1,0 +1,429 @@
+﻿Module 1
+Dec 9, 2025
+
+
+
+
+
+
+10/12/2025
+                                                            Sử dụng dữ liệu làm ví dụ và chạy thử ( dưới định dạng CSV):
+https://github.com/DataTalksClub/nyc-tlc-data?tab=readme-ov-file
+Lộ trình:
+  
+
+Tạo tài khoản GG Cloud
+Link tham gia Slack ( kiểu như discord) để trao đổi giữa các người học : https://datatalks.club/slack.html
+
+
+pwd           # Hiển thị thư mục làm việc hiện tại
+mkdir         # Tạo thư mục mới
+rmdir         # Xóa thư mục rỗng
+rm            # Xóa tệp hoặc thư mục
+cp            # Sao chép
+mv            # Di chuyển hoặc đổi tên
+
+
+chạy unbuntu trên docker : $ docker run -it unbutu bash có thể thoaast ra bằng exit
+chạy python trên docker: $ docker run -it python:3.9 
+Docker sẽ tạo ra một container với môi trường như trên để có thể thao tác trực tiếp
+
+
+ENTRYPOINT [ "bash" ] chỉ định rằng container sẽ chạy bash shell khi khởi động  
+
+
+volumes là một cách để ánh xạ thư mục có trong hệ thống trên mấy chủ sang một thư mục trong container (mounting)
+
+
+docker run: khởi cạy một container từ một image có sẵn
+docker build : chuyển một dockerfile tjafnh một docker image có thể tái sử dụng
+docker exec : thực thi một lệnh trong container đang chạy
+docker logs: hiển thị log đầu ra của container
+docker stats: hiển thị dashboard thời gian thực về CPU RAM và netword của các container
+
+
+
+
+
+
+
+
+-- Tạo database
+CREATE DATABASE database_name;
+
+
+-- Xóa database
+DROP DATABASE database_name;
+
+
+-- Tạo bảng
+CREATE TABLE table_name (
+    column1 datatype constraints,
+    column2 datatype constraints,
+    ...
+);
+
+
+-- Xóa bảng
+DROP TABLE table_name;
+
+
+-- Sửa cấu trúc bảng
+ALTER TABLE table_name 
+ADD column_name datatype;  -- Thêm cột
+
+
+ALTER TABLE table_name
+DROP COLUMN column_name;   -- Xóa cột
+
+
+ALTER TABLE table_name
+MODIFY COLUMN column_name new_datatype;  -- Sửa kiểu dữ liệu
+
+
+-- Chèn dữ liệu
+INSERT INTO table_name (column1, column2) 
+VALUES (value1, value2);
+
+
+-- Cập nhật dữ liệu
+UPDATE table_name
+SET column1 = value1, column2 = value2
+WHERE condition;
+
+
+-- Xóa dữ liệu
+DELETE FROM table_name
+WHERE condition;
+
+
+-- Truy vấn dữ liệu
+SELECT column1, column2 
+FROM table_name
+WHERE condition;
+-- Truy vấn cơ bản
+SELECT * FROM table_name;
+
+
+-- Chọn cột cụ thể
+SELECT column1, column2 FROM table_name;
+
+
+-- Đặt bí danh (alias)
+SELECT column1 AS alias_name FROM table_name;
+
+
+-- DISTINCT: Loại bỏ trùng lặp
+SELECT DISTINCT column1 FROM table_name;
+
+
+-- WHERE: Điều kiện lọc
+SELECT * FROM table_name
+WHERE condition;
+
+
+-- ORDER BY: Sắp xếp
+SELECT * FROM table_name
+ORDER BY column1 ASC|DESC;
+
+
+-- LIMIT: Giới hạn số dòng
+SELECT * FROM table_name
+LIMIT 10;
+
+
+-- BETWEEN: Trong khoảng giá trị
+SELECT * FROM table_name
+WHERE column1 BETWEEN value1 AND value2;
+
+
+-- IN: Kiểm tra trong danh sách
+SELECT * FROM table_name
+WHERE column1 IN (value1, value2, value3);
+
+
+-- LIKE: Tìm kiếm theo mẫu
+SELECT * FROM table_name
+WHERE column1 LIKE 'pattern%';
+-- Hàm tổng hợp
+SELECT 
+    COUNT(*) AS total_rows,
+    SUM(column1) AS total_sum,
+    AVG(column1) AS average_value,
+    MAX(column1) AS max_value,
+    MIN(column1) AS min_value
+FROM table_name;
+
+
+-- Hàm xử lý chuỗi
+SELECT 
+    UPPER(column1),      -- Chuyển thành chữ hoa
+    LOWER(column1),      -- Chuyển thành chữ thường
+    LENGTH(column1),     -- Độ dài chuỗi
+    CONCAT(str1, str2),  -- Nối chuỗi
+    SUBSTRING(column1, start, length)
+FROM table_name;
+
+
+-- Hàm ngày tháng
+SELECT 
+    NOW(),               -- Ngày giờ hiện tại
+    CURDATE(),           -- Ngày hiện tại
+    CURTIME(),           -- Giờ hiện tại
+    DATE_FORMAT(date_column, '%Y-%m-%d'),
+    DATEDIFF(date1, date2)
+FROM table_name;
+-- INNER JOIN
+SELECT * 
+FROM table1
+INNER JOIN table2 ON table1.id = table2.table1_id;
+
+
+-- LEFT JOIN
+SELECT * 
+FROM table1
+LEFT JOIN table2 ON table1.id = table2.table1_id;
+
+
+-- RIGHT JOIN
+SELECT * 
+FROM table1
+RIGHT JOIN table2 ON table1.id = table2.table1_id;
+
+
+-- FULL OUTER JOIN (MySQL không hỗ trợ trực tiếp)
+SELECT * FROM table1
+LEFT JOIN table2 ON table1.id = table2.table1_id
+UNION
+SELECT * FROM table1
+RIGHT JOIN table2 ON table1.id = table2.table1_id;
+
+
+SELECT column1, COUNT(*), AVG(column2)
+FROM table_name
+WHERE condition
+GROUP BY column1
+HAVING COUNT(*) > 5  -- Điều kiện trên nhóm
+ORDER BY column1;
+
+
+
+
+
+
+
+
+Google Cloud là gì?
+Google Cloud Platform (GCP) là một bộ dịch vụ đám mây do Google cung cấp — bao gồm compute, storage, database, networking, AI/ML và nhiều dịch vụ quản lý dữ liệu. GCP cho phép bạn lưu trữ, xử lý, chuyển đổi và phân tích dữ liệu ở quy mô lớn mà không phải quản lý phần lớn hạ tầng vật lý.
+
+
+Tại sao GCP hữu ích cho Data Engineer?
+Scale dễ dàng: xử lý terabyte → petabyte bằng các dịch vụ quản lý như BigQuery, Dataflow, Dataproc mà không cần quản lý cluster thủ công.
+Tích hợp tốt: dịch vụ native (Cloud Storage, Pub/Sub, BigQuery, Dataflow) liên kết mượt mà giúp xây pipeline end-to-end.
+Chi phí theo dùng (pay-as-you-go) + khả năng tối ưu (on-demand slots, flex VMs, partitioning).
+Quản lý dữ liệu lớn/streaming: Pub/Sub + Dataflow (Apache Beam) để xử lý real-time và batch dùng chung model lập trình.
+Bảo mật/kiểm soát truy cập: IAM, VPC Service Controls, CMEK (customer-managed encryption keys).
+Tính năng analytics mạnh: BigQuery (data warehouse serverless), tích hợp ML (BigQuery ML, Vertex AI).
+Quản trị & observable: Cloud Logging, Monitoring, Trace giúp vận hành pipeline ổn định.
+Dịch vụ GCP quan trọng với Data Engineer (tóm tắt)
+Cloud Storage (GCS): object lake cho raw/processed files.
+BigQuery: Data warehouse serverless, mạnh cho analytics và ad-hoc SQL trên TB–PB.
+Pub/Sub: messaging service cho streaming ingestion.
+Dataflow (Apache Beam): stream & batch processing có thể deploy như managed job.
+Dataproc: managed Spark/Hadoop (khi cần Spark jobs).
+Composer (Managed Airflow): orchestration, scheduling pipeline.
+Dataform / BigQuery Data Transfer Service: ETL/ELT / scheduled transfers từ SaaS.
+Data Catalog: metadata, search, governance.
+Secret Manager, IAM: bảo mật truy cập.
+Vertex AI: khi pipeline cần huấn luyện mô hình ML.
+
+
+Terraform là gì ?
+Terraform là một công cụ Infrastructure as Code (IaC) mã nguồn mở do HashiCorp phát triển, cho phép bạn mô tả, tạo và quản lý hạ tầng (servers, mạng, storage, DNS, database, v.v.) bằng mã (text files). Thay vì click trong console, bạn viết cấu hình (HCL — HashiCorp Configuration Language), rồi chạy lệnh để Terraform tạo/điều chỉnh tài nguyên theo mô tả đó.
+
+
+Tại sao Terraform được dùng 
+Reproducibility (tái tạo hạ tầng): cùng một mã tạo ra cùng một môi trường, dễ tái tạo cho dev/test/prod.
+Declarative & Idempotent: bạn mô tả trạng thái mong muốn; Terraform tính toán sự khác biệt (diff) và áp dụng thay đổi an toàn. Chạy lặp lại không gây trùng lặp.
+Version control & Review: cấu hình là mã => commit vào git, review thay đổi bằng pull request, audit lịch sử.
+Multi-cloud & provider-agnostic: cùng workflow cho AWS, GCP, Azure, Kubernetes, Cloudflare... bằng providers khác nhau.
+Modularization: dùng modules để tái dùng cấu hình (VPC module, DB module...).
+Plan/Apply workflow: terraform plan cho preview thay đổi, terraform apply thực hiện — giảm rủi ro lỗi cấu hình.
+State management: Terraform lưu state của tài nguyên để biết mapping giữa config và thực thể thật (local hoặc remote backend).
+Automation: tích hợp CI/CD để deploy hạ tầng tự động, consistent.
+Các khái niệm chính
+Provider: kết nối tới cloud/servcie (ví dụ: aws, google, azurerm, kubernetes).
+Resource: một thành phần hạ tầng (e.g., aws_instance, google_storage_bucket).
+Module: tập hợp resource tái sử dụng (như hàm).
+State: file JSON ghi trạng thái hiện tại, mapping tới IDs của tài nguyên — có thể lưu remote (S3/GCS/Consul/Backends) để share và khóa.
+Variables & Outputs: tái cấu hình và xuất thông tin (IP, bucket name).
+Workspaces: quản lý nhiều môi trường (dev/prod) trên cùng config (có hạn chế).
+Provisioners: chạy script trên resource mới (ít dùng, có rủi ro).
+Terraform không là một nơi quản lý hay cập nhật code , không làm thay đổi các tài nguyên bất biến 
+
+
+Triết lý "Language Agnostic" (Không phụ thuộc ngôn ngữ)
+Với Airflow, bạn phải biết Python. Với Kestra, mọi luồng công việc (flow) được định nghĩa bằng YAML.
+* Điều này giúp cả Data Engineer, Data Analyst và thậm chí là Manager đều có thể đọc hiểu cấu trúc pipeline.
+* Bạn có thể chạy code Python, R, Node.js, hay Shell script bên trong các tác vụ của Kestra mà không gặp trở ngại nào.
+2. Ưu điểm nổi bật của Kestra
+* Giao diện UI/UX hiện đại: Kestra có bộ soạn thảo (Editor) tích hợp ngay trên trình duyệt, cho phép bạn viết YAML và nhìn thấy sơ đồ DAG thay đổi trực quan theo thời gian thực.
+* Low-code nhưng linh hoạt: Bạn chỉ cần khai báo các "Plugin" có sẵn (như Postgres, BigQuery, S3). Việc kết nối và đẩy dữ liệu trở nên cực kỳ ngắn gọn.
+* Tư duy hướng sự kiện (Event-driven): Kestra rất mạnh trong việc kích hoạt pipeline dựa trên sự kiện (ví dụ: ngay khi có một file vừa được upload lên thư mục, pipeline sẽ chạy ngay lập tức thay vì đợi đến giờ cố định).
+* Không cần Worker phức tạp: Khác với Airflow cần cấu hình Celery hoặc Kubernetes Executor phức tạp, Kestra có kiến trúc tinh gọn hơn, giúp việc triển khai (deployment) nhẹ nhàng hơn nhiều.
+________________
+
+
+
+
+Homework
+Câu 1: 
+Chạy lệnh sau : winpty docker run –rm -it –entrypoint bash python:3.12.8 -c “pip –version”
+Chạy docker run trên thì được kết quả:
+ Status: Downloaded newer image for python:3.12.8
+pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
+✅
+Câu 2:
+ hostname:port để pgAdmin kết nối tới postgres trong cùng docker-compose là: db:5432.
+_Trong Docker Compose, các container có thể giao tiếp với nhau thông qua tên service
+_Service db có container name là postgres nhưng tên service là db
+_Port mà PostgreSQL lắng nghe bên trong container là 5432 (port mặc định)
+_Port 5433 chỉ dùng để expose ra host machine (5433:5432)
+_PgAdmin kết nối từ trong Docker network, nên dùng: db:5432
+
+
+✅
+Câu 3:
+        SELECT bucket, COUNT(*) AS trips
+FROM (
+    SELECT CASE
+        WHEN trip_distance <= 1 THEN '≤1 mile'
+        WHEN trip_distance > 1 AND trip_distance <= 3 THEN '(1,3]'
+        WHEN trip_distance > 3 AND trip_distance <= 7 THEN '(3,7]'
+        WHEN trip_distance > 7 AND trip_distance <= 10 THEN '(7,10]'
+        ELSE '>10 miles'
+    END AS bucket
+    FROM green_taxi_oct19
+    WHERE lpep_pickup_datetime >= '2019-10-01'
+      AND lpep_pickup_datetime < '2019-11-01'
+      AND trip_distance IS NOT NULL
+) t
+GROUP BY bucket
+ORDER BY bucket;
+
+
+ Kết quả : 104,802; 198,924; 109,603; 27,678; 35,189
+
+
+✅
+
+
+Câu 4: 
+WITH daily_max AS (
+ SELECT DATE(lpep_pickup_datetime) AS pickup_day,
+ MAX(trip_distance)        AS max_distance 
+FROM green_taxi_oct19 
+GROUP BY pickup_day )
+SELECT pickup_day, max_distance 
+FROM daily_max 
+ORDER BY max_distance DESC 
+LIMIT 1;
+
+
+Kết quả: 2019-10-31
+✅
+
+
+
+
+
+
+
+
+Câu 5:
+SELECT z."Zone"                AS pickup_zone,
+ SUM(t.total_amount)     AS gross_amount
+ FROM green_taxi_oct19 t
+ JOIN taxi_zones z 
+ON t."PULocationID" = z."LocationID" 
+WHERE DATE(t.lpep_pickup_datetime) = 
+DATE '2019-10-18' 
+GROUP BY z."Zone" 
+HAVING SUM(t.total_amount) > 13000 
+ORDER BY gross_amount DESC;
+
+
+Các zone: East Harlem North, East Harlem South, Morningside Heights.
+
+
+✅
+Câu 6:
+
+
+SELECT dz."Zone"            AS dropoff_zone, 
+MAX(t.tip_amount)    AS max_tip 
+FROM green_taxi_oct19 t 
+JOIN taxi_zones pz ON t."PULocationID" = pz."LocationID"
+ JOIN taxi_zones dz ON t."DOLocationID" = dz."LocationID"
+ WHERE pz."Zone" = 'East Harlem North'
+ AND DATE_TRUNC('month', t.lpep_pickup_datetime) = DATE '2019-10-01' 
+GROUP BY dz."Zone" 
+ORDER BY max_tip DESC LIMIT 1;
+
+
+Kết quả: JFK Ảiport
+✅
+Câu 7:
+
+
+Xác định lệnh dùng để tải provider plugins và cấu hình backend ⇒ terraform init.
+Chọn lệnh vừa tạo plan vừa tự động thực thi ⇒ terraform apply -auto-approve.
+Chọn lệnh phá huỷ toàn bộ tài nguyên đã quản lý ⇒ terraform destroy.
+✅
+
+
+Module 2
+Orchestration (Điều phối) là quá trình tự động hóa, quản lý và lên lịch cho các luồng công việc (workflows) để dữ liệu di chuyển một cách trơn tru từ nguồn đến đích.
+1. Tại sao cần Orchestration?
+Trong một hệ thống dữ liệu thực tế, bạn không chỉ có một script chạy đơn lẻ. Bạn sẽ có hàng chục, thậm chí hàng trăm bước như:
+1. Tải dữ liệu từ API.
+2. Lưu vào S3 (Data Lake).
+3. Chạy Spark job để làm sạch dữ liệu.
+4. Chuyển dữ liệu vào Data Warehouse (như BigQuery/Postgres).
+5. Gửi thông báo cho team qua Slack/Email nếu có lỗi.
+Nếu bạn làm thủ công hoặc dùng cron tab đơn giản, khi bước 1 lỗi, bước 2 vẫn chạy sẽ dẫn đến sai lệch dữ liệu. Orchestration giải quyết vấn đề này.
+2. Các thành phần cốt lõi của Orchestration
+* Directed Acyclic Graph (DAG): Đây là khái niệm quan trọng nhất. Một tập hợp các tác vụ được sắp xếp theo thứ tự nhất định (có hướng) và không lặp lại vòng tròn (phi chu trình).
+* Scheduling (Lập lịch): Chạy luồng công việc vào một thời điểm cụ thể (ví dụ: 2 giờ sáng hàng ngày) hoặc dựa trên sự kiện (khi có file mới xuất hiện).
+* Dependency Management (Quản lý phụ thuộc): Đảm bảo rằng bước B chỉ chạy khi bước A đã thành công.
+* Monitoring & Alerting: Theo dõi trạng thái (thành công/thất bại) và gửi cảnh báo khi hệ thống gặp sự cố.
+* Retries (Thử lại): Nếu một tác vụ lỗi do sự cố mạng tạm thời, hệ thống sẽ tự động chạy lại vài lần trước khi báo lỗi chính thức.
+
+
+homework
+Câu 1:
+        128.3 MB
+Câu 2: 
+        green_tripdata_2020-04.csv
+        {{inputs.taxi}} → green
+        {{inputs.year}} → 2020
+        {{inputs.month}} → 04
+Câu 3: 
+        24,648,499
+        SELECT count(*) FROM yellow_tripdata WHERE filename LIKE 'yellow_tripdata_2020%';
+Câu 4:
+        1,734,051
+        SELECT count(*) 
+FROM green_tripdata 
+WHERE filename LIKE 'green_tripdata_2020%';
+
+
+Câu 5:
+        1,925,152
+        SELECT count(*) 
+FROM yellow_tripdata 
+WHERE filename = 'yellow_tripdata_2021-03.csv';
+
+
+Câu 6:
+        Add a timezone property set to America/New_York in the Schedule trigger configuration
