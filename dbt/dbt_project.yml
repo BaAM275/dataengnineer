@@ -1,0 +1,18 @@
+name: "tea_coffee_analytics"
+version: "0.1.0"
+config-version: 2
+
+profile: "tea_coffee_profile"
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets:
+  - "target"
+
+models:
+  tea_coffee_analytics:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+
