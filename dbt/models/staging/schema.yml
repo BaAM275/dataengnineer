@@ -1,0 +1,154 @@
+version: 2
+
+sources:
+  - name: tennis_raw
+    database: tennis-data-pipeline
+    schema: tennis_raw
+    tables:
+      - name: atp_matches
+      - name: wta_matches
+
+models:
+  - name: stg_atp_matches
+    description: "Staged ATP matches with parsed dates and tour identifier"
+    columns:
+      - name: tourney_id
+        description: "Unique tournament identifier"
+        tests:
+          - not_null
+
+      - name: match_num
+        description: "Match number within tournament"
+        tests:
+          - not_null
+
+      - name: tourney_date
+        description: "Tournament start date"
+        tests:
+          - not_null
+
+      - name: tour
+        description: "Tennis tour identifier"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['atp']
+
+      - name: best_of
+        description: "Maximum number of sets in match"
+        tests:
+          - accepted_values:
+              values: [3, 5]
+              quote: false
+
+      - name: winner_id
+        description: "Winner player ID"
+        tests:
+          - not_null
+
+      - name: loser_id
+        description: "Loser player ID"
+        tests:
+          - not_null
+
+      - name: winner_age
+        description: "Age of winner at time of match in years"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 14
+              max_value: 70
+
+      - name: loser_age
+        description: "Age of loser at time of match in years"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 14
+              max_value: 70
+
+      - name: surface
+        description: "Court surface"
+        tests:
+          - accepted_values:
+              values: ['Hard', 'Clay', 'Grass', 'Carpet']
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - tourney_id
+            - match_num
+
+  - name: stg_wta_matches
+    description: "Staged WTA matches with parsed dates and tour identifier"
+    columns:
+      - name: tourney_id
+        description: "Unique tournament identifier"
+        tests:
+          - not_null
+
+      - name: match_num
+        description: "Match number within tournament"
+        tests:
+          - not_null
+
+      - name: tourney_date
+        description: "Tournament start date"
+        tests:
+          - not_null
+
+      - name: tour
+        description: "Tennis tour identifier"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['wta']
+
+      - name: best_of
+        description: "Maximum number of sets in match"
+        tests:
+          - accepted_values:
+              values: [3, 5]
+              quote: false
+      - name: minutes
+        description: "Match duration in minutes"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 4320
+              where: "score != 'W/O'"
+              config:
+                severity: warn
+
+      - name: winner_id
+        description: "Winner player ID"
+        tests:
+          - not_null
+
+      - name: loser_id
+        description: "Loser player ID"
+        tests:
+          - not_null
+
+      - name: winner_age
+        description: "Age of winner at time of match in years"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 14
+              max_value: 70
+
+      - name: loser_age
+        description: "Age of loser at time of match in years"
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 14
+              max_value: 70
+
+      - name: surface
+        description: "Court surface"
+        tests:
+          - accepted_values:
+              values: ['Hard', 'Clay', 'Grass', 'Carpet']
+
+      - name: match_id
+        tests:
+          - unique
+          - not_null

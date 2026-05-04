@@ -1,0 +1,8 @@
+project_id           = "your-gcp-project-id"
+region               = "us-central1"
+bucket_name          = "your-gcp-bucket-name"
+credentials_file     = "/tmp/gcp-key.json"
+environment          = "production"
+enable_streaming     = true
+service_account_email = "terraform-sa@your-project-id.iam.gserviceaccount.com"
+gcs_temp_bucket      = "gs://your-gcp-bucket-name-dataflow-temp"

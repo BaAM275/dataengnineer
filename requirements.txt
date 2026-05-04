@@ -1,0 +1,14 @@
+# Tennis Data Pipeline - Python Dependencies
+
+# GCP Libraries
+google-cloud-storage>=2.0.0
+google-cloud-bigquery>=3.0.0
+google-cloud-pubsub>=2.0.0
+
+# Data Engineering
+dbt-core==1.11.7
+dbt-bigquery==1.11.1
+
+# Utilities
+requests>=2.28.0
+pandas>=2.0.0

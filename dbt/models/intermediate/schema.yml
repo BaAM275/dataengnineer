@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: int_matches_unionized
+    description: "Union of ATP and WTA staging models with no additional logic"
+    columns:
+      - name: tour
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['atp', 'wta']
+
+  - name: int_matches_enriched
+    description: "Enriched matches with completion flags, set counts and derived booleans"
+    columns:
+      - name: tour
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['atp', 'wta']
+      - name: is_completed
+        description: "True if match was completed without retirement, walkover or default"
+      - name: sets_played
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: best_of
+        tests:
+          - accepted_values:
+              values: [3, 5]
+              quote: false

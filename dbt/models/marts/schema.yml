@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: fct_player_age_trends
+    description: "One row per completed match with winner/loser age metrics. Partitioned by year, clustered by tour."
+    columns:
+      - name: tourney_id
+        tests:
+          - not_null
+      - name: match_num
+        tests:
+          - not_null
+      - name: tour
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['atp', 'wta']
+      - name: tourney_date
+        tests:
+          - not_null
+      - name: winner_age
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 14
+              max_value: 70
+      - name: loser_age
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 14
+              max_value: 70
+
+  - name: fct_match_outcomes
+    description: "One row per match with completion status, set counts and score. Partitioned by year, clustered by tour."
+    columns:
+      - name: tourney_id
+        tests:
+          - not_null
+      - name: match_num
+        tests:
+          - not_null
+      - name: tour
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['atp', 'wta']
+      - name: tourney_date
+        tests:
+          - not_null
+      - name: sets_played
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 5
+      - name: best_of
+        tests:
+          - accepted_values:
+              values: [3, 5]
+              quote: false
